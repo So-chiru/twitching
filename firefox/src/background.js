@@ -1,6 +1,6 @@
 const servers = {
   twitch: undefined,
-  workers: 'workers-twitch-relay.wesub.io',
+  workers: 'workers.twitch-relay.wesub.io',
 }
 
 browser.webRequest.onBeforeRequest.addListener(
