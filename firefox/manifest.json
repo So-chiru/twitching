@@ -1,0 +1,38 @@
+{
+  "name": "Twitching",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Twitching - twitch.tv relay on edges for better experience",
+  "icons": {
+    "16": "icons/logo@16.png",
+    "32": "icons/logo@32.png",
+    "64": "icons/logo@64.png",
+    "128": "icons/logo@128.png",
+    "256": "icons/logo@256.png"
+  },
+  "applications": {
+    "gecko": {
+      "id": "twitching@sochiru.pw",
+      "strict_min_version": "42.0"
+    }
+  },
+  "background": {
+    "persistent": true,
+    "scripts": ["src/background.js"]
+  },
+  "browser_action": {
+    "default_icon": {
+      "128": "icons/logo@128.png"
+    },
+    "default_popup": "src/popup.html",
+    "default_title": "Twitching"
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "https://*.twitch.tv/*",
+    "https://usher.ttvnw.net/*",
+    "https://*-twitch-relay.wesub.io/*"
+  ]
+}
