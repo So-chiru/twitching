@@ -68,11 +68,15 @@ const renderInputs = async () => {
       customInput.placeholder = 'your-worker.workers.dev'
       customInput.value = (await store.get('custom')) || ''
 
-      customInput.onchange = () => {
-        store.set('server', 'custom')
-        store.set('custom', customInput.value)
+      const update = async () => {
+        document.querySelector('#custom').checked = true
+
+        await store.set('custom', customInput.value)
+        await store.set('server', 'custom')
         updateRule(customInput.value)
       }
+
+      customInput.onchange = update
 
       element.appendChild(customInput)
     } else {
