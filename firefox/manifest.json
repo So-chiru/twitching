@@ -12,8 +12,7 @@
   },
   "applications": {
     "gecko": {
-      "id": "twitching@sochiru.pw",
-      "strict_min_version": "42.0"
+      "id": "twitching@sochiru.pw"
     }
   },
   "background": {
