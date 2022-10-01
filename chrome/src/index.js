@@ -73,9 +73,9 @@ const updateRule = server => {
 const renderInputs = async () => {
   const list = document.querySelector('#list')
 
-  const server = await store.get('server')
+  const serverInStorage = await store.get('server')
 
-  servers.forEach(async ({ id, value }) => {
+  servers.forEach(async ({ id, value, server }) => {
     const element = document.createElement('div')
     element.className = 'radio-option'
 
@@ -84,7 +84,7 @@ const renderInputs = async () => {
     radioInput.name = 'server'
     radioInput.id = id
     radioInput.value = id
-    radioInput.checked = server === id
+    radioInput.checked = serverInStorage === id
 
     radioInput.onchange = () => {
       store.set('server', radioInput.value)
@@ -92,7 +92,7 @@ const renderInputs = async () => {
       if (radioInput.value === 'custom') {
         updateRule(document.querySelector('#custom-input').value)
       } else {
-        updateRule(servers.find(({ id }) => id === radioInput.value).server)
+        updateRule(server)
       }
     }
 

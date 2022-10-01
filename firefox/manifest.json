@@ -1,6 +1,6 @@
 {
   "name": "Twitching",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 2,
   "description": "Twitching - twitch.tv relay on edges for better experience",
   "icons": {
@@ -32,7 +32,6 @@
     "webRequestBlocking",
     "storage",
     "https://*.twitch.tv/*",
-    "https://usher.ttvnw.net/*",
-    "https://*-twitch-relay.wesub.io/*"
+    "https://usher.ttvnw.net/*"
   ]
 }

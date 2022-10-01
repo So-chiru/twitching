@@ -6,15 +6,11 @@ const servers = {
 browser.webRequest.onBeforeRequest.addListener(
   async details => {
     try {
-      const { server } = await browser.storage.local.get('server')
-
-      if (!servers[server]) {
-        return details
-      }
+      const { serverURL } = await browser.storage.local.get('serverURL')
 
       return new Promise(resolve =>
         resolve({
-          redirectUrl: `https://${servers[server]}/${details.url.replace(
+          redirectUrl: `https://${serverURL}/${details.url.replace(
             'https://usher.ttvnw.net/api/channel/hls/',
             ''
           )}`,
@@ -29,9 +25,8 @@ browser.webRequest.onBeforeRequest.addListener(
 )
 
 browser.runtime.onInstalled.addListener(() => {
-  browser.storage.local.set({ server: 'workers' })
-})
-
-browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log(request)
+  browser.storage.local.set({
+    server: 'workers',
+    serverURL: 'workers.twitch-relay.wesub.io',
+  })
 })
