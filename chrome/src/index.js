@@ -9,24 +9,38 @@ const servers = [
     value: 'Cloudflare Workers',
     server: 'workers.twitch-relay.wesub.io',
   },
+  {
+    id: 'custom',
+    value: '커스텀',
+    server: undefined,
+  },
 ]
 
-const getSelection = () => chrome.storage.local.get('server')
-const setSelection = server => chrome.storage.local.set({ server })
+const store = {
+  get: async key => {
+    return new Promise(resolve => {
+      chrome.storage.local.get(key, result => {
+        resolve(typeof key === 'undefined' ? result : result[key])
+      })
+    })
+  },
 
-const updateRule = rid => {
-  const option = servers.find(({ id }) => id === rid)
+  set: async (key, value) =>
+    new Promise(async resolve => {
+      const data = await store.get()
 
+      chrome.storage.local.set({ ...data, [key]: value }, resolve)
+    }),
+}
+
+const updateRule = server => {
   chrome.declarativeNetRequest.updateDynamicRules({
     removeRuleIds: [1],
   })
 
-  if (!option || !option.server) {
-    return
-  }
+  if (!server) return
 
   chrome.declarativeNetRequest.updateDynamicRules({
-    removeRuleIds: [1],
     addRules: [
       {
         id: 1,
@@ -34,7 +48,7 @@ const updateRule = rid => {
         action: {
           type: 'redirect',
           redirect: {
-            regexSubstitution: 'https://' + option.server + '/\\1',
+            regexSubstitution: 'https://' + server + '/\\1',
           },
         },
         condition: {
@@ -56,15 +70,14 @@ const updateRule = rid => {
   })
 }
 
-const checkInitialOpen = () => {}
-
 const renderInputs = async () => {
   const list = document.querySelector('#list')
 
-  const { server } = await getSelection()
+  const server = await store.get('server')
 
-  servers.forEach(({ id, value }) => {
+  servers.forEach(async ({ id, value }) => {
     const element = document.createElement('div')
+    element.className = 'radio-option'
 
     const radioInput = document.createElement('input')
     radioInput.type = 'radio'
@@ -74,22 +87,42 @@ const renderInputs = async () => {
     radioInput.checked = server === id
 
     radioInput.onchange = () => {
-      setSelection(id)
-      updateRule(id)
+      store.set('server', radioInput.value)
+
+      if (radioInput.value === 'custom') {
+        updateRule(document.querySelector('#custom-input').value)
+      } else {
+        updateRule(servers.find(({ id }) => id === radioInput.value).server)
+      }
     }
 
-    const radioLabel = document.createElement('label')
-    radioLabel.htmlFor = id
-    radioLabel.textContent = value
+    if (id === 'custom') {
+      const customInput = document.createElement('input')
+      customInput.type = 'text'
+      customInput.id = 'custom-input'
+      customInput.placeholder = 'your-worker.workers.dev'
+      customInput.value = (await store.get('custom')) || ''
+
+      customInput.onchange = () => {
+        store.set('server', 'custom')
+        store.set('custom', customInput.value)
+        updateRule(customInput.value)
+      }
+
+      element.appendChild(customInput)
+    } else {
+      const radioLabel = document.createElement('label')
+      radioLabel.htmlFor = id
+      radioLabel.textContent = value
+
+      element.appendChild(radioLabel)
+    }
 
     element.appendChild(radioInput)
-    element.appendChild(radioLabel)
-
     list.appendChild(element)
   })
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  checkInitialOpen()
   renderInputs()
 })

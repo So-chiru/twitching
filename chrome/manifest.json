@@ -1,6 +1,6 @@
 {
   "name": "Twitching",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 3,
   "description": "Twitching - twitch.tv relay on edges for better experience",
   "icons": {
@@ -20,13 +20,6 @@
     "default_popup": "src/popup.html",
     "default_title": "Twitching"
   },
-  "host_permissions": [
-    "https://*.twitch.tv/*",
-    "https://usher.ttvnw.net/*",
-    "https://*.twitch-relay.wesub.io/*"
-  ],
-  "permissions": [
-    "declarativeNetRequest",
-    "storage"
-  ]
+  "host_permissions": ["https://*.twitch.tv/*", "https://usher.ttvnw.net/*"],
+  "permissions": ["declarativeNetRequest", "storage"]
 }
