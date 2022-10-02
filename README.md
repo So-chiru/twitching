@@ -12,7 +12,7 @@ Firefox Addons: https://addons.mozilla.org/en-US/firefox/addon/twitching/
 
 ### 직접 구축하기
 
-#### Worker 구축
+#### 1. Workers Edge 구축하기
 
 1. [Cloudflare 계정](https://dash.cloudflare.com/)을 만듭니다.
 2. Zone의 Workers 메뉴로 이동하여 서비스 생성 버튼을 누릅니다.
@@ -45,12 +45,9 @@ async function handleRequest(request) {
 
 5. 저장 및 배포 버튼을 클릭하여 배포합니다.
 
-#### 확장 프로그램 수정하기
+#### 2. 커스텀 Edge를 사용하도록 하기
 
-1. 본 소스코드에서 `~~~.twitch-relay.wesub.io` 로 시작하는 텍스트를 찾습니다.
+1. 브라우저에서 Twitching 확장 프로그램 아이콘을 클릭합니다.
+2. 텍스트 입력 칸에 만들어 둔 Worker 주소를 입력합니다. (예시 : test.account.workers.dev)
 
-2. 본인이 사용할 서비스의 링크로 덮어 씌웁니다.
-
-3. 각 브라우저 폴더 안에 있는 내용을 압축해줍니다.
-
-4. Chrome 이용자는 `chrome://extensions` 에서 압축 해제된 확장 프로그램을 불러와 사용할 수 있습니다.
+3. 선택 후 Twitch 페이지를 새로 고칩니다.
