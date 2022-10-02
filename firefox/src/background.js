@@ -8,6 +8,10 @@ browser.webRequest.onBeforeRequest.addListener(
     try {
       const { serverURL } = await browser.storage.local.get('serverURL')
 
+      if (!serverURL) {
+        return
+      }
+
       return new Promise(resolve =>
         resolve({
           redirectUrl: `https://${serverURL}/${details.url.replace(
