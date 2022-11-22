@@ -45,7 +45,7 @@ addEventListener('fetch', (event) =>
 async function handleRequest(request) {
   const parsed = new URL(request.url)
   let response = await fetch(
-    `https://usher.ttvnw.net/api/channel/hls` +
+    `http://usher.twitch.tv/api/channel/hls` +
       parsed.href.replace(parsed.origin, ''),
     {
       headers: request.headers,
