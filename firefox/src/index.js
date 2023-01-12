@@ -1,7 +1,7 @@
 const servers = [
   {
     id: 'twitch',
-    value: 'Twitch 선택 (기본)',
+    value: 'Twitch가 선택하는 서버',
     server: undefined,
   },
   {

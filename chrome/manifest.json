@@ -20,6 +20,6 @@
     "default_popup": "src/popup.html",
     "default_title": "Twitching"
   },
-  "host_permissions": ["https://*.twitch.tv/*", "https://usher.ttvnw.net/*"],
+  "host_permissions": ["https://*.twitch.tv/*", "https://usher.ttvnw.net/*", "https://*.hls.ttvnw.net"],
   "permissions": ["declarativeNetRequest", "storage"]
 }

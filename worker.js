@@ -1,13 +1,14 @@
-addEventListener('fetch', (event) =>
+addEventListener('fetch', event =>
   event.respondWith(
     handleRequest(event.request).catch(
-      (err) => new Response(err.stack, { status: 500 })
+      err => new Response(err.stack, { status: 500 })
     )
   )
 )
 
-async function handleRequest(request) {
+async function handleRequest (request) {
   const parsed = new URL(request.url)
+
   let response = await fetch(
     `http://usher.twitch.tv/api/channel/hls` +
       parsed.href.replace(parsed.origin, ''),
