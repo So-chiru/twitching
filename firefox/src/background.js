@@ -34,3 +34,14 @@ browser.runtime.onInstalled.addListener(() => {
     serverURL: 'workers.twitch-relay.wesub.io',
   })
 })
+
+browser.webRequest.onBeforeRequest.addListener(
+  async (details) => {
+    const googleProxy = 'www-opensocial.googleusercontent.com/gadgets/proxy?container=focus&url='
+    return new Promise(resolve => resolve({
+      redirectUrl: `https://${googleProxy}${details.url}`,
+    }));
+  },
+  { urls: ['https://*.abs.hls.ttvnw.net/*'] },
+  ['blocking']
+);
