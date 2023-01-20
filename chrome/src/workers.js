@@ -54,7 +54,8 @@ chrome.runtime.onInstalled.addListener(details => {
           condition: {
             regexFilter: '^https:\/\/video-edge-[A-z0-9]+\.[A-z0-9]+\.abs\.hls\.ttvnw\.net/(.*)',
             requestMethods: [
-              'get'
+              'get',
+              'post'
             ],
           },
         },
